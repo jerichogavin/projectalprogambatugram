@@ -9,6 +9,8 @@
 - Rafandra Gifarrel Maritza Alifa - 2306216390 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/rappandra)
 - Micheal Fathoni - 2306156826 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/fathoni.0110)
 
+--- 
+
 Selamat datang di proyek Simulasi Sistem Pencatatan Kehadiran Laboratorium menggunakan RFID. Proyek ini merupakan implementasi C++ untuk menangani pencatatan kehadiran mahasiswa dan staf secara *real-time* (disimulasikan), dengan fokus pada arsitektur client-server (disimulasikan), persistensi data, dan penanganan konkurensi.
 
 ## 📜 Latar Belakang Masalah
