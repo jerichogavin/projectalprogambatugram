@@ -1,5 +1,15 @@
 #  projectalprogambatugram - RFID Lab Attendance System - Simulasi Pencatatan Kehadiran Lab 💻🔬
 
+
+ ___   _______  __   __  _______  _______  __   __  _______  _______  _______  _______  ______    _______  __   __ 
+|   | |   _   ||  |_|  ||  _    ||       ||  | |  ||       ||       ||       ||       ||    _ |  |   _   ||  |_|  |
+|   | |  |_|  ||       || |_|   ||   _   ||  | |  ||_     _||_     _||   _   ||    ___||   | ||  |  |_|  ||       |
+|   | |       ||       ||       ||  | |  ||  |_|  |  |   |    |   |  |  | |  ||   | __ |   |_||_ |       ||       |
+|   | |       ||       ||  _   | |  |_|  ||       |  |   |    |   |  |  |_|  ||   ||  ||    __  ||       ||       |
+|   | |   _   || ||_|| || |_|   ||       ||       |  |   |    |   |  |       ||   |_| ||   |  | ||   _   || ||_|| |
+|___| |__| |__||_|   |_||_______||_______||_______|  |___|    |___|  |_______||_______||___|  |_||__| |__||_|   |_|
+
+
 # 💻 Language Used:
 ![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
 
