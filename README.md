@@ -1,8 +1,13 @@
 #  projectalprogambatugram - RFID Lab Attendance System - Simulasi Pencatatan Kehadiran Lab 💻🔬
 
+# 💻 Language Used:
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
+
 ## 🌐 Socials:
-[![Luthfi](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/luthfiwhd) 
-[![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/gav.jericho)
+- Luthfi Abdillah Wahid - 2306266685 [![Luthfi](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/luthfiwhd) 
+- Muhammad Gavin Jericho - 2306215002 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/gav.jericho)
+- Rafandra Gifarrel Maritza Alifa - 2306216390 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/rappandra)
+- Micheal Fathoni - 2306156826 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/fathoni.0110)
 
 Selamat datang di proyek Simulasi Sistem Pencatatan Kehadiran Laboratorium menggunakan RFID. Proyek ini merupakan implementasi C++ untuk menangani pencatatan kehadiran mahasiswa dan staf secara *real-time* (disimulasikan), dengan fokus pada arsitektur client-server (disimulasikan), persistensi data, dan penanganan konkurensi.
 
