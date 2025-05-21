@@ -80,13 +80,13 @@ Proyek ini diimplementasikan dalam satu file C++ (`.cpp`) untuk kesederhanaan. K
 
 ### Kompilasi
 
-1.  Simpan kode sumber sebagai file (misalnya, `rfid_system.cpp`).
+1.  Simpan kode sumber sebagai file (`iambouttogram.cpp`).
 2.  Buka terminal atau command prompt Anda.
 3.  Pindah ke direktori tempat Anda menyimpan file tersebut.
 4.  Kompilasi menggunakan perintah berikut (contoh untuk g++/MinGW):
 
     ```bash
-    g++ rfid_system.cpp -o rfid_system -std=c++11 -pthread
+    g++ iambouttogram.cpp -o iambouttogram -std=c++11 -pthread
     ```
     * `-o rfid_system`: Menentukan nama file output (executable).
     * `-std=c++11`: Menggunakan standar C++11.
@@ -97,4 +97,4 @@ Proyek ini diimplementasikan dalam satu file C++ (`.cpp`) untuk kesederhanaan. K
 Setelah kompilasi berhasil, jalankan program dari terminal:
 
 ```bash
-./rfid_system  # Untuk Linux/macOS
+./iambouttogram  
