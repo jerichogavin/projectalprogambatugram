@@ -1,0 +1,3 @@
+git rm --cached iambouttogram.exe
+git rm --cached attendance.dat
+git rm --cached attendance_20250521.json
