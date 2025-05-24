@@ -1,3 +1,30 @@
-git rm --cached iambouttogram.exe
-git rm --cached attendance.dat
-git rm --cached attendance_20250521.json
+# Executables
+*.exe
+iambouttogram_server
+iambouttogram_client
+*.out
+*.app
+
+# Binary data files
+*.dat
+attendance.dat
+
+# JSON files
+*.json
+
+# Build artifacts (common for C++)
+*.o
+*.obj
+*.dll
+*.so
+*.dylib
+
+# VS Code specific
+.vscode/
+
+# macOS specific
+.DS_Store
+
+# User-specific files (if any)
+# Example:
+# my_personal_notes.txt

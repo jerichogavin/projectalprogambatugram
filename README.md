@@ -1,17 +1,17 @@
-#  projectalprogambatugram - RFID Lab Attendance System - Simulasi Pencatatan Kehadiran Lab 💻🔬
+# projectalprogambatugram - RFID Lab Attendance System - Simulasi Pencatatan Kehadiran Lab 💻🔬
 
 ## 💻 Language Used in Project:
-![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![JWT](https://img.shields.io/badge/JWT-black?style=for-the-badge&logo=JSON%20web%20tokens) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
+![C++](https://img.shields.io/badge/c++-%2300599C.svg?style=for-the-badge&logo=c%2B%2B&logoColor=white) ![Markdown](https://img.shields.io/badge/markdown-%23000000.svg?style=for-the-badge&logo=markdown&logoColor=white)
 
 ## 🌐 IamBoutToGram Member & Socials:
-- Luthfi Abdillah Wahid - 2306266685 [![Luthfi](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/luthfiwhd) 
+- Luthfi Abdillah Wahid - 2306266685 [![Luthfi](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/luthfiwhd)
 - Muhammad Gavin Jericho - 2306215002 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/gav.jericho)
-- Rafandra Gifarrel Maritza Alifa - 2306216390 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/rappandra)
-- M. Fathoni - 2306156826 [![Gavin](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/fathoni0110)
+- Rafandra Gifarrel Maritza Alifa - 2306216390 [![Rafandra](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/rappandra)
+- M. Fathoni - 2306156826 [![Fathoni](https://img.shields.io/badge/Instagram-%23E4405F.svg?logo=Instagram&logoColor=white)](https://instagram.com/fathoni0110)
 
---- 
+---
 
-Selamat datang di proyek Simulasi Sistem Pencatatan Kehadiran Laboratorium menggunakan RFID. Proyek ini merupakan implementasi C++ untuk menangani pencatatan kehadiran mahasiswa dan staf secara *real-time* (disimulasikan), dengan fokus pada arsitektur client-server (disimulasikan), persistensi data, dan penanganan konkurensi.
+Selamat datang di proyek Simulasi Sistem Pencatatan Kehadiran Laboratorium menggunakan RFID. Proyek ini merupakan implementasi C++ untuk menangani pencatatan kehadiran mahasiswa dan staf secara *real-time* (disimulasikan), dengan fokus pada arsitektur client-server, persistensi data, dan penanganan konkurensi.
 
 ## 📜 Latar Belakang Masalah
 
@@ -21,51 +21,58 @@ Dalam lingkungan laboratorium modern, pencatatan kehadiran yang akurat dan *real
 
 ## ✨ Solusi yang Diimplementasikan
 
-Proyek ini mengatasi masalah tersebut dengan menyediakan simulasi sistem terpusat di mana:
-1.  **Simulasi Client-Server**: RFID *reader* (disimulasikan sebagai *client*) "mengirimkan" data pemindaian (ID dan timestamp) ke sistem pusat (server).
-2.  **Pencarian & Pengurutan Data**: Menyediakan mekanisme untuk mencari log berdasarkan ID pengguna dan mengurutkan kunjungan berdasarkan waktu.
+Proyek ini mengatasi masalah tersebut dengan menyediakan sistem terpusat di mana:
+1.  **Arsitektur Client-Server**: RFID *reader* (disimulasikan sebagai program `iambouttogram_client`) "mengirimkan" data pemindaian (ID dan timestamp) ke sistem pusat (program `iambouttogram_server`). (Catatan: Komunikasi aktual antar proses seperti *sockets* tidak diimplementasikan dalam contoh ini; client mencetak data yang akan dikirim).
+2.  **Pencarian & Pengurutan Data**: Server menyediakan mekanisme untuk mencari log berdasarkan ID pengguna dan mengurutkan kunjungan berdasarkan waktu.
 3.  **Persistensi Data**:
-    * Semua log pemindaian disimpan secara persisten dalam file biner (`attendance.dat`).
-    * Log harian dapat diekspor ke file JSON (misalnya, `attendance_YYYYMMDD.json`) untuk kemudahan integrasi dengan *dashboard* administrasi, tanpa menggunakan pustaka JSON eksternal.
-4.  **Pemrosesan Paralel & Sinkronisasi**: Mampu menangani banyak pemindaian (disimulasikan dari berbagai *thread*) secara bersamaan dan memastikan integritas file log menggunakan mekanisme *mutex*.
+    * Semua log pemindaian yang diterima server disimpan secara persisten dalam file biner (`attendance.dat`).
+    * Log harian dapat diekspor oleh server ke file JSON (misalnya, `attendance_YYYYMMDD.json`) untuk kemudahan integrasi, tanpa menggunakan pustaka JSON eksternal.
+4.  **Pemrosesan Paralel & Sinkronisasi (di Server)**: Server dirancang untuk menangani banyak data (jika menerima dari banyak klien) dan memastikan integritas file log menggunakan mekanisme *mutex*.
 
 ## 🚀 Fitur Utama
 
-* **Simulasi Pencatatan Real-time**: Setiap "scan" RFID dicatat segera oleh sistem.
-* **Penyimpanan Log Persisten**: Data kehadiran disimpan dalam file biner dan dimuat saat aplikasi dimulai.
-* **Ekspor Data Fleksibel**: Kemampuan untuk mengekspor semua data log ke format JSON dengan nama file berbasis tanggal.
-* **Manajemen Data**:
+* **Simulasi Pencatatan Real-time**: Setiap "scan" RFID yang diterima server dicatat segera.
+* **Penyimpanan Log Persisten**: Data kehadiran disimpan oleh server dalam file biner dan dimuat saat server dimulai.
+* **Ekspor Data Fleksibel**: Server memiliki kemampuan untuk mengekspor semua data log ke format JSON dengan nama file berbasis tanggal.
+* **Manajemen Data (oleh Server)**:
     * Lihat semua log kehadiran.
     * Cari log berdasarkan ID Mahasiswa/Staf.
     * Urutkan log berdasarkan waktu pemindaian.
-* **Simulasi Multi-Client**: Menggunakan `std::thread` untuk mensimulasikan beberapa RFID *reader* yang mengirimkan data secara bersamaan.
-* **Keamanan Thread (Thread-Safety)**: Menggunakan `std::mutex` untuk melindungi akses ke data bersama dan operasi file, mencegah *race conditions* dan korupsi data.
+* **Simulasi Multi-Client**: Dapat dijalankan beberapa instansi dari program `iambouttogram_client` untuk mensimulasikan beberapa RFID *reader*.
+* **Keamanan Thread (Thread-Safety) di Server**: Server menggunakan `std::mutex` untuk melindungi akses ke data bersama (log dalam memori) dan operasi file, mencegah *race conditions* dan korupsi data.
 * **Implementasi C++ Murni**: Ditulis sepenuhnya dalam C++ standar (C++11 atau lebih baru) tanpa dependensi pustaka eksternal untuk fungsionalitas inti (termasuk pembuatan JSON).
-* **Antarmuka Menu Sederhana**: Interaksi dengan sistem melalui menu berbasis konsol.
+* **Antarmuka Menu Sederhana**: Interaksi dengan sistem server melalui menu berbasis konsol.
 
-## 🏗️ Struktur Kode (Single File)
+## 🏗️ Struktur Proyek (Multi-File)
 
-Proyek ini diimplementasikan dalam satu file C++ (`.cpp`) untuk kesederhanaan. Komponen utama dalam kode adalah:
+Proyek ini dibagi menjadi beberapa file untuk memisahkan logika server, klien, dan komponen bersama:
 
-1.  **`struct LogEntry`**:
-    * Mendefinisikan struktur data untuk setiap catatan kehadiran, menyimpan `studentID` (char array) dan `timestamp` (long long).
-2.  **`class AttendanceSystem`**:
-    * Merangkum semua logika "server".
+1.  **`attendance_common.h`**:
+    * Berisi definisi umum yang digunakan oleh server dan klien.
+    * `struct LogEntry`: Mendefinisikan struktur data untuk setiap catatan kehadiran (menyimpan `studentID` dan `timestamp`).
+    * Konstanta seperti `BINARY_LOG_FILE` dan `STUDENT_ID_MAX_LEN`.
+
+2.  **`attendance_system.h`**:
+    * File header untuk kelas `AttendanceSystem`.
+    * Mendeklarasikan antarmuka kelas yang menangani semua logika inti server.
+
+3.  **`attendance_system.cpp`**:
+    * Implementasi dari kelas `AttendanceSystem`.
     * Mengelola `std::vector<LogEntry>` untuk menyimpan log di memori.
     * Menyediakan `std::mutex` untuk sinkronisasi.
-    * Fungsi untuk:
-        * `recordScan()`: Menerima dan memproses data scan.
-        * `loadLogsFromBinary()`, `appendLogToBinary()`: Mengelola persistensi file biner.
-        * `searchLogsByID()`, `sortLogsByTime()`: Fitur pencarian dan pengurutan.
-        * `exportLogsToJSON()`: Membuat output JSON secara manual.
-        * `viewAllLogs()`: Menampilkan log.
-3.  **`simulateRFIDClient()` function**:
-    * Fungsi yang dijalankan oleh `std::thread` untuk mensimulasikan perilaku RFID *client* yang mengirimkan data scan.
-4.  **`main()` function**:
-    * Titik masuk aplikasi.
+    * Fungsi utama: `recordScan()`, `loadLogsFromBinary()`, `appendLogToBinary()`, `searchLogsByID()`, `sortLogsByTime()`, `exportLogsToJSON()`, `viewAllLogs()`.
+
+4.  **`iambouttogram_server_main.cpp`**:
+    * Titik masuk untuk program server (`iambouttogram_server`).
     * Menginisialisasi `AttendanceSystem`.
-    * Membuat beberapa *thread* untuk `simulateRFIDClient`.
-    * Menyediakan antarmuka menu interaktif untuk pengguna.
+    * Menyediakan antarmuka menu interaktif admin untuk mengelola dan melihat log.
+    * Secara konseptual, ini adalah tempat server akan "mendengarkan" data dari klien.
+
+5.  **`iambouttogram_client_main.cpp`**:
+    * Titik masuk untuk program klien (`iambouttogram_client`).
+    * Mensimulasikan perilaku RFID *reader*.
+    * Mengumpulkan ID pengguna (misalnya dari argumen baris perintah) dan menghasilkan *timestamp*.
+    * "Mengirim" data ini (dalam simulasi ini, data dicetak ke konsol).
 
 ## 🛠️ Teknologi yang Digunakan
 
@@ -76,8 +83,8 @@ Proyek ini diimplementasikan dalam satu file C++ (`.cpp`) untuk kesederhanaan. K
     * `<string>` untuk manipulasi string.
     * `<fstream>` untuk operasi file (biner dan teks).
     * `<algorithm>` untuk fungsi pengurutan.
-    * `<thread>` untuk simulasi konkurensi.
-    * `<mutex>` untuk sinkronisasi antar thread.
+    * `<thread>` untuk konkurensi (digunakan di server jika menangani banyak tugas, dan di klien jika diperlukan).
+    * `<mutex>` untuk sinkronisasi antar thread di server.
     * `<chrono>` untuk mendapatkan timestamp.
     * `<iomanip>`, `<sstream>` untuk format output dan manipulasi string stream.
     * `<ctime>`, `<cstring>` untuk fungsi terkait waktu dan C-string.
@@ -88,24 +95,55 @@ Proyek ini diimplementasikan dalam satu file C++ (`.cpp`) untuk kesederhanaan. K
 ### Prasyarat
 
 * Kompiler C++ yang mendukung C++11 atau lebih baru (misalnya, g++, Clang, MinGW untuk Windows, MSVC).
+* Git untuk kloning repositori (opsional, jika kode sudah ada).
 
 ### Kompilasi
 
-1.  Simpan kode sumber sebagai file (`iambouttogram.cpp`).
+1.  Pastikan semua file sumber (`.h` dan `.cpp`) berada dalam direktori yang sama.
 2.  Buka terminal atau command prompt Anda.
-3.  Pindah ke direktori tempat Anda menyimpan file tersebut.
-4.  Kompilasi menggunakan perintah berikut (contoh untuk g++/MinGW):
-
+3.  Pindah ke direktori tempat Anda menyimpan file-file tersebut.
+4.  Kompilasi program server:
     ```bash
-    g++ iambouttogram.cpp -o iambouttogram -std=c++11 -pthread
+    g++ -std=c++11 -pthread iambouttogram_server_main.cpp attendance_system.cpp -o iambouttogram_server
     ```
-    * `-o rfid_system`: Menentukan nama file output (executable).
+5.  Kompilasi program klien:
+    ```bash
+    g++ -std=c++11 -pthread iambouttogram_client_main.cpp -o iambouttogram_client
+    ```
+    * `-o <nama_executable>`: Menentukan nama file output (executable).
     * `-std=c++11`: Menggunakan standar C++11.
     * `-pthread`: Diperlukan untuk dukungan `std::thread` pada beberapa konfigurasi g++/MinGW. Untuk MSVC, ini biasanya tidak diperlukan secara eksplisit.
 
 ### Menjalankan Program
 
-Setelah kompilasi berhasil, jalankan program dari terminal:
+Setelah kompilasi berhasil:
 
-```bash
-./iambouttogram  
+1.  **Jalankan Server**:
+    Buka terminal dan jalankan server. Server akan memuat log yang ada (jika ada `attendance.dat`) dan menunggu interaksi melalui menu admin.
+    ```bash
+    ./iambouttogram_server
+    ```
+    Server akan berjalan dan menampilkan menu admin. File `attendance.dat` akan dibuat/digunakan di direktori tempat server dijalankan.
+
+2.  **Jalankan Klien (di terminal terpisah)**:
+    Buka terminal lain untuk menjalankan satu atau lebih instansi klien. Klien akan mensimulasikan pengiriman data scan.
+    ```bash
+    ./iambouttogram_client <StudentID> [jumlahScan] [delayMs]
+    ```
+    * `<StudentID>`: ID mahasiswa atau staf (misalnya, `MHS123`).
+    * `[jumlahScan]` (opsional): Berapa kali scan akan disimulasikan untuk ID ini (default: 1).
+    * `[delayMs]` (opsional): Delay dalam milidetik antar scan jika `jumlahScan > 1` (default: 1000ms).
+
+    **Contoh Client [IMPORTANT]:**
+    ```bash
+    ./iambouttogram_client MHS001
+    ```
+    (Mensimulasikan satu scan untuk MHS001)
+
+    ```bash
+    ./iambouttogram_client STF007 3 500
+    ```
+    (Mensimulasikan STF007 melakukan scan 3 kali dengan interval 500ms)
+
+
+
