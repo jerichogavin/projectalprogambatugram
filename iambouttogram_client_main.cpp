@@ -2,44 +2,42 @@
 #include <string>
 #include <vector>
 #include <chrono>
-#include <thread> // For sleep
-#include "attendance_common.h" // For LogEntry and constants
+#include <thread>   // For sleep
+#include <fstream>  // <-- BARU: Untuk std::ofstream
+#include <sstream>  // <-- BARU: Untuk std::ostringstream
+#include "attendance_common.h" 
 
-// Function to simulate sending data to the server
-// In a real application, this would use sockets or another IPC mechanism.
+// Function to send data to the server via a shared file
 void sendScanDataToServer(const LogEntry& entry) {
-    std::cout << "[Client] Mengirim data ke server (simulasi):" << std::endl;
+    std::cout << "[Client] Menulis data ke pipe file (" << IPC_PIPE_FILE << "):" << std::endl;
     std::cout << "  StudentID: " << entry.studentID << std::endl;
     std::cout << "  Timestamp: " << entry.timestamp << std::endl;
-    // Example: write to a file, send over network, etc.
-    // For now, we just print it.
-    // If using file IPC:
-    // std::ofstream outfile("scan_pipe.txt", std::ios::app);
-    // if (outfile.is_open()) {
-    //     outfile << entry.studentID << "," << entry.timestamp << std::endl;
-    //     outfile.close();
-    // } else {
-    //     std::cerr << "[Client] Error: Tidak dapat membuka pipe file untuk mengirim data." << std::endl;
-    // }
+
+    std::ofstream pipeFile(IPC_PIPE_FILE, std::ios::app); // Buka dalam mode append
+    if (pipeFile.is_open()) {
+        pipeFile << entry.studentID << "," << entry.timestamp << std::endl;
+        pipeFile.close();
+        std::cout << "[Client] Data berhasil ditulis ke " << IPC_PIPE_FILE << std::endl;
+    } else {
+        std::cerr << "[Client] Error: Tidak dapat membuka pipe file (" << IPC_PIPE_FILE << ") untuk mengirim data." << std::endl;
+    }
 }
 
 int main(int argc, char* argv[]) {
-    std::string studentID;
+    std::string studentID_str; // Ganti nama variabel agar tidak bentrok
     int numScans = 1;
-    int delayMs = 1000; // Default delay between scans if numScans > 1
+    int delayMs = 1000; 
 
     if (argc < 2) {
         std::cerr << "Penggunaan: " << argv[0] << " <StudentID> [numScans] [delayMs]" << std::endl;
-        std::cerr << "Contoh: " << argv[0] << " MHS123" << std::endl;
-        std::cerr << "Contoh: " << argv[0] << " STF007 5 500 (untuk 5 scan dengan delay 500ms)" << std::endl;
-        // Defaulting to a test ID if no arguments are provided for easier testing
-        std::cout << "Tidak ada ID diberikan, menggunakan ID default 'TEST001' untuk 1 scan." << std::endl;
-        studentID = "TEST001";
+        std::cout << "Tidak ada ID diberikan, menggunakan ID default 'TESTCLIENT001' untuk 1 scan." << std::endl;
+        studentID_str = "TESTCLIENT001";
     } else {
-        studentID = argv[1];
+        studentID_str = argv[1];
         if (argc > 2) {
             try {
                 numScans = std::stoi(argv[2]);
+                if (numScans <= 0) numScans = 1;
             } catch (const std::exception& e) {
                 std::cerr << "Error: Jumlah scan tidak valid: " << argv[2] << ". Menggunakan default 1." << std::endl;
                 numScans = 1;
@@ -48,6 +46,7 @@ int main(int argc, char* argv[]) {
         if (argc > 3) {
              try {
                 delayMs = std::stoi(argv[3]);
+                if (delayMs < 0) delayMs = 0;
             } catch (const std::exception& e) {
                 std::cerr << "Error: Delay tidak valid: " << argv[3] << ". Menggunakan default 1000ms." << std::endl;
                 delayMs = 1000;
@@ -55,14 +54,13 @@ int main(int argc, char* argv[]) {
         }
     }
     
-
-    if (studentID.length() >= STUDENT_ID_MAX_LEN) {
+    if (studentID_str.length() >= STUDENT_ID_MAX_LEN) {
         std::cerr << "[Client] Error: Student ID terlalu panjang (maks " 
                   << STUDENT_ID_MAX_LEN -1 << " karakter)." << std::endl;
         return 1;
     }
 
-    std::cout << "iambouttogram_client dimulai untuk ID: " << studentID 
+    std::cout << "iambouttogram_client dimulai untuk ID: " << studentID_str 
               << ", Jumlah Scan: " << numScans 
               << ", Delay: " << delayMs << "ms" << std::endl;
 
@@ -71,7 +69,7 @@ int main(int argc, char* argv[]) {
             std::chrono::system_clock::now().time_since_epoch()
         ).count();
 
-        LogEntry scanToSend(studentID, currentTimestamp);
+        LogEntry scanToSend(studentID_str, currentTimestamp);
         
         std::cout << "\n[Client] (" << i+1 << "/" << numScans <<") Mensimulasikan scan..." << std::endl;
         sendScanDataToServer(scanToSend);

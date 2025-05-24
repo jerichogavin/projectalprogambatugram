@@ -18,12 +18,13 @@ private:
 public:
     AttendanceSystem();
 
-    void recordScan(const std::string& studentID, long long timestamp); // This would be called by the server upon receiving data
+    void recordScan(const std::string& studentID, long long timestamp);
     void loadLogsFromBinary();
     std::vector<LogEntry> searchLogsByID(const std::string& studentID_query) const;
     void sortLogsByTime();
     void exportLogsToJSON() const;
     void viewAllLogs() const;
+    void processIncomingScansFromFile(); // <-- BARU
 };
 
 #endif // ATTENDANCE_SYSTEM_H

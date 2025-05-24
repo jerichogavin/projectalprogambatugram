@@ -11,6 +11,7 @@ attendance.dat
 
 # JSON files
 *.json
+*.txt
 
 # Build artifacts (common for C++)
 *.o
