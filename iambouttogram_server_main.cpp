@@ -64,8 +64,8 @@ int main() {
                         std::cout << "Ditemukan " << results.size() << " log untuk ID: " << userInputID << std::endl;
                         // Display headers for search results
                         std::cout << std::left << std::setw(STUDENT_ID_MAX_LEN) << "ID Mahasiswa"
-                                  << std::setw(20) << "Timestamp (Epoch)"
-                                  << "Waktu (Human-readable)" << std::endl;
+                                << std::setw(20) << "Timestamp (Epoch)"
+                                << "Waktu (Human-readable)" << std::endl;
                         std::cout << std::string(STUDENT_ID_MAX_LEN + 20 + 30 + 5, '-') << std::endl;
 
                         for (const auto& entry : results) {
@@ -101,8 +101,8 @@ int main() {
                                 if (tm_info_ptr_search) {
                                     tm_info_buf_search = *tm_info_ptr_search;
                                     if (std::strftime(buffer_search, sizeof(buffer_search), "%Y-%m-%d %H:%M:%S (epoch)", &tm_info_buf_search) == 0) {
-                                         strncpy(buffer_search, "Epoch Format Error", sizeof(buffer_search) - 1);
-                                         buffer_search[sizeof(buffer_search) - 1] = '\0';
+                                        strncpy(buffer_search, "Epoch Format Error", sizeof(buffer_search) - 1);
+                                        buffer_search[sizeof(buffer_search) - 1] = '\0';
                                     }
                                 } else {
                                     strncpy(buffer_search, "Time System Error", sizeof(buffer_search) - 1);
@@ -111,8 +111,8 @@ int main() {
                             }
 #endif
                             std::cout << std::left << std::setw(STUDENT_ID_MAX_LEN) << entry.studentID
-                                      << std::setw(20) << entry.timestamp
-                                      << buffer_search << std::endl;
+                                    << std::setw(20) << entry.timestamp
+                                    << buffer_search << std::endl;
                         }
                         std::cout << std::string(STUDENT_ID_MAX_LEN + 20 + 30 + 5, '-') << std::endl;
                     }
@@ -128,7 +128,7 @@ int main() {
             case '5': // Simulasikan Scan Baru (Manual Server Input)
                 std::cout << "Masukkan ID Mahasiswa/Staf untuk scan baru: ";
                 if (!std::getline(std::cin, userInputID)) {
-                     std::cout << "Input error saat membaca ID. Kembali ke menu." << std::endl;
+                    std::cout << "Input error saat membaca ID. Kembali ke menu." << std::endl;
                     break;
                 }
 
@@ -137,7 +137,7 @@ int main() {
                     // So the maximum length of the input string is STUDENT_ID_MAX_LEN - 1
                     if (userInputID.length() >= STUDENT_ID_MAX_LEN) {
                         std::cout << "Error: ID terlalu panjang. Maksimum "
-                                  << STUDENT_ID_MAX_LEN - 1 << " karakter." << std::endl;
+                                << STUDENT_ID_MAX_LEN - 1 << " karakter." << std::endl;
                     } else {
                         long long ts = std::chrono::duration_cast<std::chrono::seconds>(
                         std::chrono::system_clock::now().time_since_epoch()).count();
