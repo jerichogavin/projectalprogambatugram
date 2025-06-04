@@ -49,7 +49,7 @@ int main(int argc, char* argv[]) {
             }
         }
         if (argc > 3) {
-             try {
+            try {
                 delayMs = std::stoi(argv[3]);
                 if (delayMs < 0) delayMs = 0;
             } catch (const std::exception& e) {
@@ -61,13 +61,13 @@ int main(int argc, char* argv[]) {
     
     if (studentID_str.length() >= STUDENT_ID_MAX_LEN) {
         std::cerr << "[Client] Error: Student ID terlalu panjang (maks " 
-                  << STUDENT_ID_MAX_LEN -1 << " karakter)." << std::endl;
+                    << STUDENT_ID_MAX_LEN -1 << " karakter)." << std::endl;
         return 1;
     }
 
     std::cout << "iambouttogram_client dimulai untuk ID: " << studentID_str 
-              << ", Jumlah Scan: " << numScans 
-              << ", Delay: " << delayMs << "ms" << std::endl;
+                << ", Jumlah Scan: " << numScans 
+                << ", Delay: " << delayMs << "ms" << std::endl;
 
     for (int i = 0; i < numScans; ++i) {
         long long currentTimestamp = std::chrono::duration_cast<std::chrono::seconds>(
