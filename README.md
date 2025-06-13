@@ -43,107 +43,61 @@ Proyek ini mengatasi masalah tersebut dengan menyediakan sistem terpusat di mana
 * **Implementasi C++ Murni**: Ditulis sepenuhnya dalam C++ standar (C++11 atau lebih baru) tanpa dependensi pustaka eksternal untuk fungsionalitas inti (termasuk pembuatan JSON).
 * **Antarmuka Menu Sederhana**: Interaksi dengan sistem server melalui menu berbasis konsol.
 
-## 🏗️ Struktur Proyek (Multi-File)
+## 🏗️ Struktur Proyek
 
-Proyek ini dibagi menjadi beberapa file untuk memisahkan logika server, klien, dan komponen bersama:
-
-1.  **`attendance_common.h`**:
-    * Berisi definisi umum yang digunakan oleh server dan klien.
-    * `struct LogEntry`: Mendefinisikan struktur data untuk setiap catatan kehadiran (menyimpan `studentID` dan `timestamp`).
-    * Konstanta seperti `BINARY_LOG_FILE` dan `STUDENT_ID_MAX_LEN`.
-
-2.  **`attendance_system.h`**:
-    * File header untuk kelas `AttendanceSystem`.
-    * Mendeklarasikan antarmuka kelas yang menangani semua logika inti server.
-
-3.  **`attendance_system.cpp`**:
-    * Implementasi dari kelas `AttendanceSystem`.
-    * Mengelola `std::vector<LogEntry>` untuk menyimpan log di memori.
-    * Menyediakan `std::mutex` untuk sinkronisasi.
-    * Fungsi utama: `recordScan()`, `loadLogsFromBinary()`, `appendLogToBinary()`, `searchLogsByID()`, `sortLogsByTime()`, `exportLogsToJSON()`, `viewAllLogs()`.
-
-4.  **`iambouttogram_server_main.cpp`**:
-    * Titik masuk untuk program server (`iambouttogram_server`).
-    * Menginisialisasi `AttendanceSystem`.
-    * Menyediakan antarmuka menu interaktif admin untuk mengelola dan melihat log.
-    * Secara konseptual, ini adalah tempat server akan "mendengarkan" data dari klien.
-
-5.  **`iambouttogram_client_main.cpp`**:
-    * Titik masuk untuk program klien (`iambouttogram_client`).
-    * Mensimulasikan perilaku RFID *reader*.
-    * Mengumpulkan ID pengguna (misalnya dari argumen baris perintah) dan menghasilkan *timestamp*.
-    * "Mengirim" data ini (dalam simulasi ini, data dicetak ke konsol).
+Proyek ini dibagi menjadi beberapa file untuk memisahkan logika server dan klien:
+1.  **`server.cpp`**: Implementasi server yang menangani koneksi, menerima data, mencatat log, dan mengekspor data.
+2.  **`client.cpp`**: Implementasi client yang terhubung ke server dan mengirimkan data scan RFID (NPM).
+3.  **`iambouttogram.json`**: File database awal yang berisi daftar mahasiswa (NPM dan Nama) yang valid.
 
 ## 🛠️ Teknologi yang Digunakan
 
-* **Bahasa**: C++ (dengan standar C++11 atau lebih baru)
+* **Bahasa**: C++ (standar C++11 atau lebih baru)
 * **Pustaka Standar C++**:
-    * `<iostream>` untuk input/output konsol.
-    * `<vector>` untuk manajemen data log dinamis.
-    * `<string>` untuk manipulasi string.
-    * `<fstream>` untuk operasi file (biner dan teks).
-    * `<algorithm>` untuk fungsi pengurutan.
-    * `<thread>` untuk konkurensi (digunakan di server jika menangani banyak tugas, dan di klien jika diperlukan).
-    * `<mutex>` untuk sinkronisasi antar thread di server.
-    * `<chrono>` untuk mendapatkan timestamp.
-    * `<iomanip>`, `<sstream>` untuk format output dan manipulasi string stream.
-    * `<ctime>`, `<cstring>` untuk fungsi terkait waktu dan C-string.
-    * `<limits>` untuk `std::numeric_limits`.
+    * `<iostream>`, `<vector>`, `<string>`, `<fstream>`
+    * `<thread>`, `<mutex>` untuk konkurensi dan sinkronisasi.
+    * `<chrono>`, `<iomanip>` untuk manajemen waktu dan timestamp.
+* **Networking**:
+    * **Windows**: `winsock2.h`
+    * **Linux/Unix**: `sys/socket.h`, `netinet/in.h`
 
-## ⚙️ Cara Menggunakan
+## ⚙️ Build & Run Guide
 
-### Prasyarat
+### Kompilasi (Build Instructions)
 
-* Kompiler C++ yang mendukung C++11 atau lebih baru (misalnya, g++, Clang, MinGW untuk Windows, MSVC).
-* Git untuk kloning repositori (opsional, jika kode sudah ada).
+Pastikan Anda memiliki kompiler C++ (seperti g++ pada MinGW/MSYS2 untuk Windows atau g++ pada Linux).
 
-### Kompilasi
-
-1.  Pastikan semua file sumber (`.h` dan `.cpp`) berada dalam direktori yang sama.
-2.  Buka terminal atau command prompt Anda.
-3.  Pindah ke direktori tempat Anda menyimpan file-file tersebut.
-4.  Kompilasi program server:
-    ```bash
-    g++ -std=c++11 -pthread iambouttogram_server_main.cpp attendance_system.cpp -o iambouttogram_server
-    ```
-5.  Kompilasi program klien:
-    ```bash
-    g++ -std=c++11 -pthread iambouttogram_client_main.cpp -o iambouttogram_client
-    ```
-    * `-o <nama_executable>`: Menentukan nama file output (executable).
-    * `-std=c++11`: Menggunakan standar C++11.
-    * `-pthread`: Diperlukan untuk dukungan `std::thread` pada beberapa konfigurasi g++/MinGW. Untuk MSVC, ini biasanya tidak diperlukan secara eksplisit.
-
-### Menjalankan Program
-
-Setelah kompilasi berhasil:
-
-1.  **Jalankan Server**:
-    Buka terminal dan jalankan server. Server akan memuat log yang ada (jika ada `attendance.dat`) dan menunggu interaksi melalui menu admin.
-    ```bash
-    ./iambouttogram_server
-    ```
-    Server akan berjalan dan menampilkan menu admin. File `attendance.dat` akan dibuat/digunakan di direktori tempat server dijalankan.
-
-2.  **Jalankan Klien (di terminal terpisah)**:
-    Buka terminal lain untuk menjalankan satu atau lebih instansi klien. Klien akan mensimulasikan pengiriman data scan.
-    ```bash
-    ./iambouttogram_client <StudentID> [jumlahScan] [delayMs]
-    ```
-    * `<StudentID>`: ID mahasiswa atau staf (misalnya, `MHS123`).
-    * `[jumlahScan]` (opsional): Berapa kali scan akan disimulasikan untuk ID ini (default: 1).
-    * `[delayMs]` (opsional): Delay dalam milidetik antar scan jika `jumlahScan > 1` (default: 1000ms).
-
-    **Contoh Client [IMPORTANT]:**
-    ```bash
-    ./iambouttogram_client MHS001
-    ```
-    (Mensimulasikan satu scan untuk MHS001)
-
-    ```bash
-    ./iambouttogram_client STF007 3 500
-    ```
-    (Mensimulasikan STF007 melakukan scan 3 kali dengan interval 500ms)
+**Windows (MinGW/MSYS2)**
+```bash
+g++ -o server.exe server.cpp -lws2_32 -pthread
+g++ -o client.exe client.cpp -lws2_32 -pthread
 
 
+### Menjalankan Program (Run Instructions)
+
+#### Langkah 1: Jalankan Server
+
+Buka terminal dan jalankan file executable server.
+
+Windows: server.exe
+Linux: ./server
+Server akan:
+
+Memuat database dari iambouttogram.json.
+Mendengarkan koneksi pada port 8080.
+Menampilkan log aktivitas secara real-time di konsol.
+Menyimpan log kehadiran harian ke dalam file .log (contoh: attendance_20250613.log).
+Perintah Server (Server commands):
+
+* export - Mengekspor semua log yang tercatat ke dalam file JSON.
+* quit - Menghentikan dan keluar dari server.
+
+Langkah 2: Jalankan Client (di Terminal baru)
+
+Buka terminal baru untuk setiap client yang ingin Anda jalankan.
+
+Windows: `client.exe`
+Linux: `./client`
+
+Client akan Terhubung ke server yang berjalan di localhost:8080. Menampilkan menu interaktif untuk pengguna. Mensimulasikan proses scan RFID dengan meminta input NPM dari pengguna.
 
